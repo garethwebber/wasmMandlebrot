@@ -1,5 +1,4 @@
 import kotlinx.browser.document
-import org.w3c.dom.Element
 import kotlinx.dom.appendElement
 import kotlinx.dom.appendText
 import complex 
@@ -27,8 +26,10 @@ fun mandelbrot(z0: Complex, max: Int): Int {
 }
 
 fun main() {
-    document.body?.appendText("Running computation")
-    document.body?.appendText("pre")
+    document.body?.appendText("Running mandlebrot computation")
+    val code = document.createElement("div") 
+    code.className = "ascii-art"
+    document.body?.appendChild(code)
     var y : Double = 1.0 
     var yStep : Double = 2.0 / size
 
@@ -37,12 +38,11 @@ fun main() {
       var xStep = 2.5 / (size * 2.0)
 
       while(x <= 0.5) {
-        document.body?.appendText(toSymbol(mandelbrot(complex(x, y), 20)))
+        code.appendText(toSymbol(mandelbrot(complex(x, y), 20)))
         x += xStep 
       }
 
-      document.body?.appendText("\n")
+      code.appendText("\n")
       y -= yStep 
     }
-    document.body?.appendText("</pre>")
 }
