@@ -1,5 +1,7 @@
 # wasmMandlebrot
 
+![Output](output.jpg)
+
 ## Build and run
 
 To build and run the example execute follow command in a terminal:
