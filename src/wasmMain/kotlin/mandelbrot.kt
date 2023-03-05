@@ -26,7 +26,7 @@ fun main() {
   canvas.clear()
   canvas.title()
   val size = canvas.getSize()
-   
+ 
   var x = 0
   var y = 0
   val yStart : Double = 1.0 
@@ -38,10 +38,8 @@ fun main() {
     x=0
 
     while(x < size) {
-      if((mandelbrot(complex((xStart + (x*xStep)), (yStart - (y*yStep))), 20)) == max) {
-        //code.appendText("($x, $y)")
-        canvas.draw(x, y)
-      }
+      canvas.draw(x, y, mandelbrot(complex((xStart + (x*xStep)), (yStart - (y*yStep))), 20))
+      //code.appendText("($x, $y)")
       x += 1 
     }
     y += 1  
