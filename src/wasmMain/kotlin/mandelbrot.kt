@@ -1,9 +1,10 @@
 import kotlinx.browser.document
 import kotlinx.dom.appendElement
 import kotlinx.dom.appendText
+import Canvas
 import complex 
 
-val size = 50
+val size = 80
 val max  = 20
 
 fun toSymbol(value: Int) : String {
@@ -26,23 +27,32 @@ fun mandelbrot(z0: Complex, max: Int): Int {
 }
 
 fun main() {
-    document.body?.appendText("Running mandlebrot computation")
     val code = document.createElement("div") 
     code.className = "ascii-art"
     document.body?.appendChild(code)
-    var y : Double = 1.0 
-    var yStep : Double = 2.0 / size
+  
+    val canvas = Canvas()
+    canvas.clear()
+    canvas.title()
+   
+    var x = 0
+    var y = 0
+    val yStart : Double = 1.0 
+    val yStep : Double = 2.0 / size
 
-    while(y >= -1){
-      var x : Double = -2.0 
-      var xStep = 2.5 / (size * 2.0)
+    while(y < size){
+      val xStart : Double = -2.0 
+      val xStep = 2.5 / size 
+      x=0
 
-      while(x <= 0.5) {
-        code.appendText(toSymbol(mandelbrot(complex(x, y), 20)))
-        x += xStep 
+      while(x < size) {
+        if((mandelbrot(complex((xStart + (x*xStep)), (yStart - (y*yStep))), 20)) == max) {
+          //code.appendText("($x, $y)")
+          canvas.draw(x, y)
+        }
+        x += 1 
       }
 
-      code.appendText("\n")
-      y -= yStep 
+      y += 1
     }
 }
