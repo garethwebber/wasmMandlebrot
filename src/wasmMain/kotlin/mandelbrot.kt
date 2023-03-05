@@ -4,16 +4,7 @@ import kotlinx.dom.appendText
 import Canvas
 import complex 
 
-val size = 80
 val max  = 20
-
-fun toSymbol(value: Int) : String {
-  if (value == max) {
-    return "*"
-  }
-
-  return " "
-}
 
 fun mandelbrot(z0: Complex, max: Int): Int {
     var z = z0
@@ -27,32 +18,32 @@ fun mandelbrot(z0: Complex, max: Int): Int {
 }
 
 fun main() {
-    val code = document.createElement("div") 
-    code.className = "ascii-art"
-    document.body?.appendChild(code)
+  val code = document.createElement("div") 
+  code.className = "ascii-art"
+  document.body?.appendChild(code)
   
-    val canvas = Canvas()
-    canvas.clear()
-    canvas.title()
+  val canvas = Canvas()
+  canvas.clear()
+  canvas.title()
+  val size = canvas.getSize()
    
-    var x = 0
-    var y = 0
-    val yStart : Double = 1.0 
-    val yStep : Double = 2.0 / size
+  var x = 0
+  var y = 0
+  val yStart : Double = 1.0 
+  val yStep : Double = 2.0 / size
 
-    while(y < size){
-      val xStart : Double = -2.0 
-      val xStep = 2.5 / size 
-      x=0
+  while(y < size){
+    val xStart : Double = -2.0 
+    val xStep = 2.5 / size 
+    x=0
 
-      while(x < size) {
-        if((mandelbrot(complex((xStart + (x*xStep)), (yStart - (y*yStep))), 20)) == max) {
-          //code.appendText("($x, $y)")
-          canvas.draw(x, y)
-        }
-        x += 1 
+    while(x < size) {
+      if((mandelbrot(complex((xStart + (x*xStep)), (yStart - (y*yStep))), 20)) == max) {
+        //code.appendText("($x, $y)")
+        canvas.draw(x, y)
       }
-
-      y += 1
+      x += 1 
     }
+    y += 1  
+  }
 }
