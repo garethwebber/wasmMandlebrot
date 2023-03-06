@@ -3,6 +3,10 @@ import kotlinx.browser.window
 import org.w3c.dom.*
 import org.w3c.dom.events.*
 
+// Nasty hack as calling ctx.fillStyle hits a type bug
+@JsFun("x => x")
+external fun stringToDynamic(value: String) : Dynamic
+
 class Canvas {
   val canvas = document.getElementById("display") as HTMLCanvasElement
   val ctx = canvas.getContext("2d")!! as CanvasRenderingContext2D
@@ -21,8 +25,8 @@ class Canvas {
 
   fun title() {
     ctx.save()
-    ctx.font = "16px sans-serif"
-    ctx.fillText("Mandlebrot Set", 0.0, 32.0)
+    ctx.font = "24px sans-serif"
+    ctx.fillText("Mandlebrot Set", 10.0, 32.0)
     ctx.restore()
   }
 
@@ -36,14 +40,14 @@ class Canvas {
     val Y = canvas.height.toDouble() / 800.0
  
     ctx.save()
- //   when(color) {
- //     in 1..5   -> ctx.fillStyle = cols(Color.YELLOW).
- //     in 6..10  -> ctx.fillStyle = cols(Color.GREEN).
- //     in 11..15 -> ctx.fillStyle = cols(Color.ORANGE)
- //     in 15..19 -> ctx.fillStyle = cols(Color.BLUE)
- //     else      -> ctx.fillStyle = cols(Color.BLACK)
- //   }
-    if (color==20) { ctx.strokeRect((x.toDouble() * X), (y.toDouble() * Y), 1.0, 1.0) }
+    when(color) {
+      in 0..4   -> ctx.fillStyle = stringToDynamic(cols(Color.YELLOW))
+      in 5..9  -> ctx.fillStyle = stringToDynamic(cols(Color.GREEN))
+      in 10..14 -> ctx.fillStyle = stringToDynamic(cols(Color.ORANGE))
+      in 15..19 -> ctx.fillStyle = stringToDynamic(cols(Color.BLUE))
+      else      -> ctx.fillStyle = stringToDynamic(cols(Color.BLACK))
+     }
+     ctx.fillRect((x.toDouble() * X), (y.toDouble() * Y), 1.0, 1.0) 
     ctx.restore()
   }
 }

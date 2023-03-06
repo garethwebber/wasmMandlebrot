@@ -24,7 +24,6 @@ fun main() {
   
   val canvas = Canvas()
   canvas.clear()
-  canvas.title()
   val size = canvas.getSize()
  
   var x = 0
@@ -44,4 +43,5 @@ fun main() {
     }
     y += 1  
   }
+  canvas.title()
 }
