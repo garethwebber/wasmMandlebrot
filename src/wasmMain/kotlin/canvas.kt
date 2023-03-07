@@ -1,11 +1,17 @@
 import kotlinx.browser.document
 import kotlinx.browser.window
+import kotlin.math.floor
+import kotlin.math.max
 import org.w3c.dom.*
 import org.w3c.dom.events.*
 
 // Nasty hack as calling ctx.fillStyle hits a type bug
 @JsFun("x => x")
 external fun stringToDynamic(value: String) : Dynamic
+
+//
+//@JsFun("x => console.log(x)")
+//external fun log(text: String): Unit
 
 class Canvas {
   val canvas = document.getElementById("display") as HTMLCanvasElement
@@ -14,7 +20,7 @@ class Canvas {
 
   init {
     canvas.width = window.innerWidth.toInt() - 20
-    canvas.height = window.innerHeight.toInt() - 50
+    canvas.height = window.innerHeight.toInt() - 20
   }
 
   fun clear() {
@@ -31,13 +37,13 @@ class Canvas {
   }
 
   fun getSize() : Int {
-    // Pretend we have an 800x800 grid
-    return 800
+     return max(canvas.width, canvas.height)
   }
 
   fun draw(x: Int, y: Int, color: Int) {
-    val X = canvas.width.toDouble() / 800.0
-    val Y = canvas.height.toDouble() / 800.0
+    val size = getSize()
+    val X = canvas.width.toDouble() / size
+    val Y = canvas.height.toDouble() / size
  
     ctx.save()
     when(color) {
@@ -47,7 +53,7 @@ class Canvas {
       in 15..19 -> ctx.fillStyle = stringToDynamic(cols(Color.BLUE))
       else      -> ctx.fillStyle = stringToDynamic(cols(Color.BLACK))
      }
-     ctx.fillRect((x.toDouble() * X), (y.toDouble() * Y), 1.0, 1.0) 
+     ctx.fillRect(floor(x.toDouble() * X), floor(y.toDouble() * Y), 1.0, 1.0) 
     ctx.restore()
   }
 }

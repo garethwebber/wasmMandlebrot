@@ -18,10 +18,6 @@ fun mandelbrot(z0: Complex, max: Int): Int {
 }
 
 fun main() {
-  val code = document.createElement("div") 
-  code.className = "ascii-art"
-  document.body?.appendChild(code)
-  
   val canvas = Canvas()
   canvas.clear()
   val size = canvas.getSize()
@@ -38,7 +34,6 @@ fun main() {
 
     while(x < size) {
       canvas.draw(x, y, mandelbrot(complex((xStart + (x*xStep)), (yStart - (y*yStep))), 20))
-      //code.appendText("($x, $y)")
       x += 1 
     }
     y += 1  
