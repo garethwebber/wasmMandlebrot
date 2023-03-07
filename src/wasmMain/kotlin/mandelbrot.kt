@@ -1,4 +1,3 @@
-import Canvas
 import complex 
 
 fun mandelbrot(z0: Complex, max: Int): Int {

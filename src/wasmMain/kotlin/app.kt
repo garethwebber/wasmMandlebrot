@@ -13,10 +13,11 @@ fun drawSet() {
 }
 
 fun myEventListner(event: Event): Unit {
+  canvas.resetSize()
   drawSet()
 }
 
 fun main(){
   drawSet()
-//  window.addEventListener("resize", {event -> myEventListner(event)});
+  window.addEventListener("resize", {event -> myEventListner(event)});
 }

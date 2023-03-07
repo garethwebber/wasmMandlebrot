@@ -9,18 +9,18 @@ import org.w3c.dom.events.*
 @JsFun("x => x")
 external fun stringToDynamic(value: String) : Dynamic
 
-//
-//@JsFun("x => console.log(x)")
-//external fun log(text: String): Unit
-
 class Canvas {
   val canvas = document.getElementById("display") as HTMLCanvasElement
   val ctx = canvas.getContext("2d")!! as CanvasRenderingContext2D
   private fun cols(c: Color): String = "rgb(${c.r},${c.g},${c.b})"
 
   init {
-    canvas.width = window.innerWidth.toInt() - 20
-    canvas.height = window.innerHeight.toInt() - 20
+    resetSize()
+   }
+
+  fun resetSize() {
+   canvas.width = window.innerWidth.toInt() - 20
+   canvas.height = window.innerHeight.toInt() - 20
   }
 
   fun clear() {
