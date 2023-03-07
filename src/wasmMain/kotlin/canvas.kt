@@ -20,7 +20,7 @@ class Canvas {
 
   fun resetSize() {
    canvas.width = window.innerWidth.toInt() - 20
-   canvas.height = window.innerHeight.toInt() - 20
+   canvas.height = window.innerHeight.toInt() - 50
   }
 
   fun clear() {
