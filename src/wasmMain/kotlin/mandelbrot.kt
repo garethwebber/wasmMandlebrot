@@ -15,12 +15,12 @@ fun calculateSet(size: Int, max: Int): Array<IntArray> {
   var matrix: Array<IntArray> = Array(size) { IntArray(size) }
   var x = 0
   var y = 0
-  val yStart : Double = 1.0 
-  val yStep : Double = 2.0 / size
+  val yStart : Double = 1.2 
+  val yStep : Double = 2.4 / size
 
   while(y < size){
     val xStart : Double = -2.0 
-    val xStep = 2.5 / size 
+    val xStep = 2.55 / size 
     x=0
 
     while(x < size) {
