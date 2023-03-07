@@ -61,8 +61,13 @@ class Canvas {
     val Y = canvas.height.toDouble() / size
     
     ctx.save()
-    val index = value / 5
-    ctx.fillStyle = stringToDynamic(cols(Palette.ultraPalette[index]))
+    
+    val paletteSize:Int  = Palette.wikiPalette.size - 1 // Oxford array
+    val cStep: Double = 20.0 / paletteSize.toDouble()
+    val index: Int = (floor(value.toDouble() / cStep)).toInt()
+    //val index = if(cindex > paletteSize - 1) { paletteSize -1 } else  { cindex }
+    
+    ctx.fillStyle = stringToDynamic(cols(Palette.wikiPalette[index]))
     ctx.fillRect(floor(x.toDouble() * X), floor(y.toDouble() * Y), 1.0, 1.0) 
     ctx.restore()
   }
