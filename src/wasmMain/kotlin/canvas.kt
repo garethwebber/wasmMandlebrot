@@ -4,6 +4,8 @@ import kotlin.math.floor
 import kotlin.math.max
 import org.w3c.dom.*
 import org.w3c.dom.events.*
+import Color
+import Palette
 
 // Nasty hack as calling ctx.fillStyle hits a type bug
 @JsFun("x => x")
@@ -12,7 +14,7 @@ external fun stringToDynamic(value: String) : Dynamic
 class Canvas {
   val canvas = document.getElementById("display") as HTMLCanvasElement
   val ctx = canvas.getContext("2d")!! as CanvasRenderingContext2D
-  private fun cols(c: Color): String = "rgb(${c.r},${c.g},${c.b})"
+  fun cols(c: Color): String = "rgb(${c.r},${c.g},${c.b})"
 
   init {
     resetSize()
@@ -32,6 +34,7 @@ class Canvas {
   fun title() {
     ctx.save()
     ctx.font = "24px sans-serif"
+    ctx.fillStyle = stringToDynamic(cols(Color.WHITE))
     ctx.fillText("Mandlebrot Set", 10.0, 32.0)
     ctx.restore()
   }
@@ -56,16 +59,11 @@ class Canvas {
     val size = getSize()
     val X = canvas.width.toDouble() / size
     val Y = canvas.height.toDouble() / size
- 
+    
     ctx.save()
-    when(value) {
-      in 0..4   -> ctx.fillStyle = stringToDynamic(cols(Color.YELLOW))
-      in 5..9  -> ctx.fillStyle = stringToDynamic(cols(Color.GREEN))
-      in 10..14 -> ctx.fillStyle = stringToDynamic(cols(Color.ORANGE))
-      in 15..19 -> ctx.fillStyle = stringToDynamic(cols(Color.BLUE))
-      else      -> ctx.fillStyle = stringToDynamic(cols(Color.BLACK))
-     }
-     ctx.fillRect(floor(x.toDouble() * X), floor(y.toDouble() * Y), 1.0, 1.0) 
+    val index = value / 5
+    ctx.fillStyle = stringToDynamic(cols(Palette.ultraPalette[index]))
+    ctx.fillRect(floor(x.toDouble() * X), floor(y.toDouble() * Y), 1.0, 1.0) 
     ctx.restore()
   }
 }
