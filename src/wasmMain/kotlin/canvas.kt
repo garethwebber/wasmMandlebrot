@@ -40,13 +40,25 @@ class Canvas {
      return max(canvas.width, canvas.height)
   }
 
-  fun draw(x: Int, y: Int, color: Int) {
+  fun drawMatrix(matrix: Array<IntArray>){
+    var x = 0
+    for(line in matrix) {
+      var y = 0
+      for (value in line) {
+        drawPixel(x, y, value)
+        y += 1
+      }
+      x += 1
+    }
+  }
+
+  fun drawPixel(x: Int, y: Int, value:Int) {
     val size = getSize()
     val X = canvas.width.toDouble() / size
     val Y = canvas.height.toDouble() / size
  
     ctx.save()
-    when(color) {
+    when(value) {
       in 0..4   -> ctx.fillStyle = stringToDynamic(cols(Color.YELLOW))
       in 5..9  -> ctx.fillStyle = stringToDynamic(cols(Color.GREEN))
       in 10..14 -> ctx.fillStyle = stringToDynamic(cols(Color.ORANGE))

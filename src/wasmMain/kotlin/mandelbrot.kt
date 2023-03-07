@@ -1,10 +1,5 @@
-import kotlinx.browser.document
-import kotlinx.dom.appendElement
-import kotlinx.dom.appendText
 import Canvas
 import complex 
-
-val max  = 20
 
 fun mandelbrot(z0: Complex, max: Int): Int {
     var z = z0
@@ -17,11 +12,8 @@ fun mandelbrot(z0: Complex, max: Int): Int {
     return max
 }
 
-fun main() {
-  val canvas = Canvas()
-  canvas.clear()
-  val size = canvas.getSize()
- 
+fun calculateSet(size: Int, max: Int): Array<IntArray> {
+  var matrix: Array<IntArray> = Array(size) { IntArray(size) }
   var x = 0
   var y = 0
   val yStart : Double = 1.0 
@@ -33,10 +25,10 @@ fun main() {
     x=0
 
     while(x < size) {
-      canvas.draw(x, y, mandelbrot(complex((xStart + (x*xStep)), (yStart - (y*yStep))), 20))
+     matrix[x][y] = mandelbrot(complex((xStart + (x*xStep)), (yStart - (y*yStep))), max)
       x += 1 
     }
     y += 1  
   }
-  canvas.title()
+  return matrix
 }
