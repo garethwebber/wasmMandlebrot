@@ -1,11 +1,21 @@
  import Color
 
  object Palette {
+   fun getPalette(): List<List<Color>> {
+     return listOf(
+       defaultPalette,
+       ultraPalette,
+       wikiPalette
+     )
+   }
+
    val defaultPalette: List<Color> = listOf(
+    Color.RED,
+    Color.ORANGE,
     Color.YELLOW,
     Color.GREEN,
-    Color.ORANGE,
     Color.BLUE,
+    Color.MAGENTA,
     Color.BLACK
   )
 
