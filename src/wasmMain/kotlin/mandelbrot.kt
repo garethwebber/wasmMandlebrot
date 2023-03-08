@@ -11,20 +11,18 @@ fun mandelbrot(z0: Complex, max: Int): Int {
     return max
 }
 
-fun calculateSet(size: Int, max: Int): Array<IntArray> {
+fun calculateSet(xStart: Double, yStart: Double, xEnd:Double, yEnd:Double, size: Int, max: Int): Array<IntArray> {
   var matrix: Array<IntArray> = Array(size) { IntArray(size) }
   var x = 0
   var y = 0
-  val yStart : Double = 1.2 
-  val yStep : Double = 2.4 / size
+  val yStep : Double = yEnd / size 
 
   while(y < size){
-    val xStart : Double = -2.0 
-    val xStep = 2.55 / size 
+    val xStep = xEnd / size
     x=0
 
     while(x < size) {
-     matrix[x][y] = mandelbrot(complex((xStart + (x*xStep)), (yStart - (y*yStep))), max)
+     matrix[x][y] = mandelbrot(complex((xStart + (x*xStep)), (yStart + (y*yStep))), max)
       x += 1 
     }
     y += 1  

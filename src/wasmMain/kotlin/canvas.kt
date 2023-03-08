@@ -1,11 +1,14 @@
 import kotlinx.browser.document
 import kotlinx.browser.window
+import kotlinx.dom.appendText
 import kotlin.math.floor
 import kotlin.math.max
 import org.w3c.dom.*
 import org.w3c.dom.events.*
 import Color
 import Palette
+
+val debug = document.createElement("div") 
 
 // Nasty hack as calling ctx.fillStyle hits a type bug
 @JsFun("x => x")
@@ -18,6 +21,7 @@ class Canvas {
 
   init {
     resetSize()
+    document.body?.appendChild(debug)
    }
 
   fun resetSize() {
@@ -37,6 +41,38 @@ class Canvas {
     ctx.fillStyle = stringToDynamic(cols(Color.WHITE))
     ctx.fillText("Mandlebrot Set", 10.0, 32.0)
     ctx.restore()
+  }
+
+  fun plotRect(startx: Double, starty:Double, endx: Double, endy:Double){
+    val X = canvas.width
+    val Y = canvas.height
+    val width = endx-startx
+    val height = endy-starty
+
+    ctx.save()
+    ctx.strokeStyle = stringToDynamic(cols(Color.RED))
+    ctx.strokeRect(X*startx, Y*starty, X*width, Y*height) 
+    ctx.restore()
+  }
+  
+  fun plotClick(x: Double, y:Double){
+    val X =  x * canvas.width
+    val Y =  y * canvas.height
+    
+    ctx.save()
+    ctx.fillStyle = stringToDynamic(cols(Color.RED))
+    
+    //debug.appendText("($X, $Y)")
+    ctx.fillRect(X, Y, 4.0, 4.0) 
+    ctx.restore()
+  }
+
+  fun pixelToValueX(clickX: Double): Double {
+    return clickX/ canvas.width 
+  }
+
+  fun pixelToValueY(clickY: Double): Double {
+    return clickY / canvas.height 
   }
 
   fun getSize() : Int {
